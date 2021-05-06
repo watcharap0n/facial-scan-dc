@@ -23,10 +23,11 @@ def face_rec():
         prediction = detected.face_recognition_DLIB()
         faces = prediction['face']
         img_name = prediction['img_name']
+        process_time = prediction['time']
         host = request.host
         url = f'{host}/{UPLOAD_FOLDER}/{img_name}'
         print(url)
-    return jsonify({'face': faces, 'url': url, 'status': 'success'})
+        return jsonify({'face': faces, 'url': url, 'status': 'success', 'process_time': round(process_time, 2)})
 
 
 

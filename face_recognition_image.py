@@ -3,9 +3,10 @@ import cv2
 import dlib
 from imutils import face_utils
 import pickle
+import os
 import time
 import uuid
-
+import datetime
 
 class ModelImage:
     FACE_DESC, FACE_NAME = pickle.load(open('train_datasets.pk', 'rb'))
@@ -19,6 +20,10 @@ class Recognition(ModelImage):
         self.file_name = file_name
 
     def face_recognition_DLIB(self):
+        path_mkdir = 'static/cropped'
+        d1 = str(datetime.datetime.now())
+        path_join = os.path.join(path_mkdir, d1)
+        os.mkdir(path_join)
         names = []
         image = cv2.imread(self.file_name, cv2.IMREAD_UNCHANGED)
         time_start = time.time()
@@ -73,8 +78,9 @@ class Recognition(ModelImage):
                 # for (x, y) in shape_circle:
                 #     cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
             write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
+            cropped_name = uuid.uuid4().hex
+            cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
         img_name = uuid.uuid4().hex
-        cv2.imwrite(filename='static/prediction/cropped.png', img=write_image)
         cv2.imwrite(filename=f'static/prediction/{img_name}.png', img=image)
         endtime = time.time() - time_start
         print(round(endtime, 2))
