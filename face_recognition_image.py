@@ -21,7 +21,8 @@ class Recognition(ModelImage):
 
     def face_recognition_DLIB(self):
         path_mkdir = 'static/cropped'
-        d1 = str(datetime.datetime.now())
+        dn = datetime.datetime.now()
+        d1 = dn.strftime("%d-%m-%y-%H-%M-%S")
         path_join = os.path.join(path_mkdir, d1)
         os.mkdir(path_join)
         names = []
