@@ -26,6 +26,7 @@ class Recognition(ModelImage):
         path_join = os.path.join(path_mkdir, d1)
         os.mkdir(path_join)
         names = []
+        unknown = []
         image = cv2.imread(self.file_name, cv2.IMREAD_UNCHANGED)
         time_start = time.time()
         scale = 0.5
@@ -70,6 +71,8 @@ class Recognition(ModelImage):
                 #     cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
                 names.append(name)
             else:
+                name = 'unknown'
+                unknown.append(name)
                 percent = 1.0 - d[idx]
                 percent = percent * 100
                 cv2.putText(image, f'{round(percent, 1)}%', (xy[0], xy[1] - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
@@ -88,6 +91,8 @@ class Recognition(ModelImage):
         print(names)
         result = {
             'face': names,
+            'unknown': len(unknown),
+            'peoples': len(names) + len(unknown),
             'img_name': img_name,
             'time': endtime
         }

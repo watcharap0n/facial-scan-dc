@@ -27,7 +27,13 @@ def face_rec():
         host = request.host
         url = f'http://{host}/static/prediction/{img_name}.png'
         print(url)
-        return jsonify({'face': faces, 'url': url, 'status': 'success', 'process_time': round(process_time, 2)})
+        return jsonify({
+            'face': faces, 
+            'unknown': prediction['unknown'], 
+            'peoples': prediction['peoples'],
+            'url': url, 'status': 'success',
+            'process_time': round(process_time, 2)
+        })
 
 
 
