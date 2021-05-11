@@ -141,6 +141,12 @@ def delete_cropped():
     raise InvalidUsage('no such file directory', status_code=400)
 
 
+@app.route('/api/check_list_trainset')
+def trainset():
+    trainset = os.listdir('datasets/labels')
+    return jsonify({'trainset': trainset, 'total': len(trainset)})
+
+
 if __name__ == '__main__':
     logging.basicConfig(filename='error.log', level=logging.DEBUG)
     app.run(port=8080, debug=True)
