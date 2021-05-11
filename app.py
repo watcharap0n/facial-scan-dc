@@ -54,32 +54,35 @@ def remove_file():
 def face_rec():
     if 'file' not in request.files:
         flash('No file part')
-        return jsonify({'info': 'key form-data Invalid'})
+        raise InvalidUsage('key form-data Invalid', status_code=400)
     file = request.files['file']
-    if file:
-        image = os.path.join(UPLOAD_FOLDER, file.filename)
-        file.save(image)
-        detected = Recognition(image)
-        prediction = detected.face_recognition_DLIB()
-        faces = prediction['face']
-        img_name = prediction['img_name']
-        process_time = prediction['time']
-        host = request.host
-        path_prediction = '/static/prediction'
-        path_prediction = os.path.join(path_prediction, f'{img_name}.png')
-        url = f'http://{host}{path_prediction}'
-        out = jsonify({
-            'face': faces,
-            'unknown': prediction['unknown'],
-            'peoples': prediction['peoples'],
-            'url': url, 'status': 'success',
-            'process_time': round(process_time, 2)
-        })
-        out.set_cookie('path_timer', path_prediction)
-        set_time = 60.0 * 60.0 * 5.0
-        timer = threading.Timer(set_time, remove_file)
-        timer.start()
-        return out
+    try:
+        if file:
+            image = os.path.join(UPLOAD_FOLDER, file.filename)
+            file.save(image)
+            detected = Recognition(image)
+            prediction = detected.face_recognition_DLIB()
+            faces = prediction['face']
+            img_name = prediction['img_name']
+            process_time = prediction['time']
+            host = request.host
+            path_prediction = '/static/prediction'
+            path_prediction = os.path.join(path_prediction, f'{img_name}.png')
+            url = f'http://{host}{path_prediction}'
+            out = jsonify({
+                'face': faces,
+                'unknown': prediction['unknown'],
+                'peoples': prediction['peoples'],
+                'url': url, 'status': 'success',
+                'process_time': round(process_time, 2)
+            })
+            out.set_cookie('path_timer', path_prediction)
+            set_time = 60.0 * 60.0 * 5.0
+            timer = threading.Timer(set_time, remove_file)
+            timer.start()
+            return out
+    except:
+        raise InvalidUsage('API application Someting wrong')
 
 
 @app.route('/api/get_folder_cropped')
