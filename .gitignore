@@ -3,3 +3,7 @@ venv
 __pycache__
 .DS_Store
 .vscode
+datasets/labels
+static/cropped
+static/prediction
+static/uploads
