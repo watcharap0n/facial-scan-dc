@@ -28,9 +28,12 @@ class Recognition(ModelImage):
         names = []
         unknown = []
         image = cv2.imread(self.file_name, cv2.IMREAD_UNCHANGED)
-        time_start = time.time()
+        height, width, color = image.shape
         scale = 0.5
-        image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        if height >= 1000:
+            image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+            print('rezising...')
+        time_start = time.time()
         gray_scale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         detected = self.detector(gray_scale, 1)
         for d in detected:
@@ -85,6 +88,7 @@ class Recognition(ModelImage):
             cropped_name = uuid.uuid4().hex
             cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
         img_name = uuid.uuid4().hex
+
         cv2.imwrite(filename=f'static/prediction/{img_name}.png', img=image)
         endtime = time.time() - time_start
         print(round(endtime, 2))
