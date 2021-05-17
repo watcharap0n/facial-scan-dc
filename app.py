@@ -146,7 +146,7 @@ def delete_cropped():
 
 @app.route('/api/check_list_trainset')
 def trainset():
-    trainset = os.listdir('datasets/labels')
+    trainset = os.listdir('datasets/new_labels')
     return jsonify({'trainset': trainset, 'total': len(trainset)})
 
 
