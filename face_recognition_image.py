@@ -84,11 +84,10 @@ class Recognition(ModelImage):
                 cv2.rectangle(image, xy, wh, (0, 0, 255), 2)
                 # for (x, y) in shape_circle:
                 #     cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
-            write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
-            cropped_name = uuid.uuid4().hex
-            cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
+            # write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
+            # cropped_name = uuid.uuid4().hex
+            # cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
         img_name = uuid.uuid4().hex
-
         cv2.imwrite(filename=f'static/prediction/{img_name}.png', img=image)
         endtime = time.time() - time_start
         print(round(endtime, 2))

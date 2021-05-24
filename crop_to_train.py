@@ -10,7 +10,7 @@ detector = dlib.get_frontal_face_detector()
 sp = dlib.shape_predictor('model_image/shape_predictor_68_face_landmarks.dat')
 model = dlib.face_recognition_model_v1('model_image/dlib_face_recognition_resnet_model_v1.dat')
 
-path = '/Users/kanew/Desktop/test'
+path = 'datasets/crop_train'
 # path = 'datasets/crop_train'
 img_pixel = 128
 scale = 0.5

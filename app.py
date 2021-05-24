@@ -76,7 +76,7 @@ def face_rec():
                 'url': url, 'status': 'success',
                 'process_time': round(process_time, 2)
             })
-            out.set_cookie('path_timer', path_prediction)
+            # out.set_cookie('path_timer', path_prediction)
             set_time = 60.0 * 60.0 * 5.0
             timer = threading.Timer(set_time, remove_file)
             timer.start()
