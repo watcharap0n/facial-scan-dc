@@ -34,4 +34,4 @@ for fn in listdir(path):
                     print('Done... {} {:.2f} '.format(path_label, sec))
 avg = time_avg[-1] / len(time_avg)
 print('avg: {} sec '.format(str(round(avg, 2))))
-pickle.dump((FACE_DETS, FACE_NAME), open('trainingset_dc.pk', 'wb'))
+pickle.dump((FACE_DETS, FACE_NAME), open('train_datasets.pk', 'wb'))

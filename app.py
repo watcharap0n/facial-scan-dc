@@ -6,11 +6,12 @@ import requests
 import threading
 import json
 import shutil
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.secret_key = 'watcharaponweeraborirak'
 UPLOAD_FOLDER = 'static/uploads'
-
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 class InvalidUsage(Exception):
     status_code = 400
