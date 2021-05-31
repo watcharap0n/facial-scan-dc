@@ -20,14 +20,14 @@ class Recognition(ModelImage):
         self.file_name = file_name
 
     def face_recognition_DLIB(self):
-        path_mkdir = 'static/cropped'
-        dn = datetime.datetime.now()
-        d1 = dn.strftime("%d-%m-%y %H-%M-%S")
-        path_join = os.path.join(path_mkdir, d1)
-        os.mkdir(path_join)
+        # path_mkdir = 'static/cropped'
+        # dn = datetime.datetime.now()
+        # d1 = dn.strftime("%d-%m-%y %H-%M-%S")
+        # path_join = os.path.join(path_mkdir, d1)
+        # os.mkdir(path_join)
         names = []
         unknown = []
-        image = cv2.imread(self.file_name, cv2.IMREAD_UNCHANGED)
+        image = cv2.imread(self.file_name)
         height, width, color = image.shape
         scale = 0.5
         if height >= 1000:
@@ -101,5 +101,6 @@ class Recognition(ModelImage):
         }
         return result
 
-# face = Recognition('test_images/team_mango2018.jpg')
+
+# face = Recognition('Untitled-1.png')
 # face.face_recognition_DLIB()
