@@ -55,7 +55,7 @@ def remove_file():
 def face_rec():
     if 'file' not in request.files:
         flash('No file part')
-        raise InvalidUsage('key form-data Invalid', status_code=400)
+        raise InvalidUsage('key form-data Invalid or not in value', status_code=400)
     file = request.files['file']
     try:
         if file:
@@ -68,8 +68,8 @@ def face_rec():
             process_time = prediction['time']
             host = request.host
             path_prediction = '/static/prediction'
-            path_prediction = os.path.join(path_prediction, f'{img_name}.png')
-            url = f'http://{host}{path_prediction}'
+            # path_prediction = os.path.join(path_prediction, f'{img_name}.png')
+            url = f'http://{host}{path_prediction}/{img_name}.png'
             out = jsonify({
                 'face': faces,
                 'unknown': prediction['unknown'],
