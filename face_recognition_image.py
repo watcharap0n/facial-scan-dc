@@ -8,6 +8,7 @@ import time
 import uuid
 import datetime
 
+
 class ModelImage:
     FACE_DESC, FACE_NAME = pickle.load(open('train_datasets.pk', 'rb'))
     detector = dlib.get_frontal_face_detector()
@@ -20,11 +21,14 @@ class Recognition(ModelImage):
         self.file_name = file_name
 
     def face_recognition_DLIB(self):
-        # path_mkdir = 'static/cropped'
-        # dn = datetime.datetime.now()
-        # d1 = dn.strftime("%d-%m-%y %H-%M-%S")
-        # path_join = os.path.join(path_mkdir, d1)
-        # os.mkdir(path_join)
+        """
+        path_mkdir = 'static/cropped'
+        dn = datetime.datetime.now()
+        d1 = dn.strftime("%d-%m-%y %H-%M-%S")
+        path_join = os.path.join(path_mkdir, d1)
+        os.mkdir(path_join)
+        =================== prediction cropped in strftime
+        """
         names = []
         unknown = []
         image = cv2.imread(self.file_name)
@@ -41,7 +45,7 @@ class Recognition(ModelImage):
             wh = d.right(), d.bottom()
             shape = self.sp(gray_scale, d)
             face_desc_first = self.model.compute_face_descriptor(image, shape, 1)
-            shape_circle = face_utils.shape_to_np(shape)
+
             d = []
             for face_desc in self.FACE_DESC:
                 d.append(np.linalg.norm(np.array(face_desc) - np.array(face_desc_first)))
@@ -70,8 +74,6 @@ class Recognition(ModelImage):
                 cv2.putText(image, f'{round(percent, 1)}%', (xy[0] + 40, xy[1] + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                             (0, 255, 255), 2, cv2.LINE_AA)
                 cv2.rectangle(image, xy, wh, (0, 255, 255), 2)
-                # for (x, y) in shape_circle:
-                #     cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
                 names.append(name)
             else:
                 name = 'unknown'
@@ -82,11 +84,14 @@ class Recognition(ModelImage):
                             (0, 0, 255), 2,
                             cv2.LINE_AA)
                 cv2.rectangle(image, xy, wh, (0, 0, 255), 2)
-                # for (x, y) in shape_circle:
-                #     cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
-            # write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
-            # cropped_name = uuid.uuid4().hex
-            # cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
+
+            """
+            write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
+            cropped_name = uuid.uuid4().hex
+            cv2.imwrite(filename=f'{path_join}/{cropped_name}.png', img=write_image)
+            =================== prediction cropped in strftime 
+            """
+
         img_name = uuid.uuid4().hex
         cv2.imwrite(filename=f'static/prediction/{img_name}.png', img=image)
         endtime = time.time() - time_start
@@ -100,7 +105,3 @@ class Recognition(ModelImage):
             'time': endtime
         }
         return result
-
-
-# face = Recognition('Untitled-1.png')
-# face.face_recognition_DLIB()
