@@ -58,8 +58,8 @@ class Recognition(ModelImage):
                     for (x, y) in shape_circle:
                         cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
                 write_image = image[xy[1] - 40:wh[1], xy[0]:wh[0]]
-                cv2.imwrite(filename='cropped.png', img=write_image)
-                cv2.imwrite(filename='preview.png', img=image)
+                # cv2.imwrite(filename='cropped.png', img=write_image)
+                # cv2.imwrite(filename='preview.png', img=image)
             cv2.imshow('face_recognition', image)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

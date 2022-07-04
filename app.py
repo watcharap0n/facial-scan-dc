@@ -1,10 +1,8 @@
-from flask import Flask, request, flash, redirect, jsonify, url_for, session, make_response
+from flask import Flask, request, flash, jsonify
 from face_recognition_image import Recognition
 import os
 import logging
-import requests
 import threading
-import json
 import shutil
 from flask_cors import CORS
 
@@ -12,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'watcharaponweeraborirak'
 UPLOAD_FOLDER = 'static/uploads'
 CORS(app, resources={r'/*': {'origins': '*'}})
+
 
 class InvalidUsage(Exception):
     status_code = 400
